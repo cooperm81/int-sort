@@ -12,7 +12,7 @@ import sys
 import random
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
+logging.basicConfig(stream=sys.stdout, level=logging.ERROR)
 
 def printArray ( a ):   
     print( "list contains {} item(s)".format(len(a)) )
@@ -27,21 +27,35 @@ def sortIntArray( unsorted ):
     if (len(unsorted) <= 1):
         return unsorted
 
-    # if there is nothing in the new list yet, set this item to be the first item
-    if (len(new) == 0):
-        #TODO: check if tosort is a proper int
+    # looking for the first item to put into new[]
+    while ((len(new) == 0) and len(unsorted) >= 1):
         tosort = unsorted.pop()
-        logging.debug("inserting {} at position {}".format(tosort, str(i)))
-        new.insert(i, tosort)
+        # checking if the value coming out of the array is actually an int
+        try:
+            assert type(tosort) == int, "expected integer value and received non-integer value"
+        except AssertionError:
+            logging.warning("found non-integer value {} in array, skipping it".format(tosort))
+        else:
+            logging.debug("inserting {} at position {}".format(tosort, str(i)))
+            new.insert(i, tosort)
     
     # there's at least something in the new list, so we need to compare to find the right location to insert
     while (len(unsorted) >= 1):
         logging.debug( "still {} item(s) to sort".format(len(unsorted)) )
+
         # there is still at least one item in the list
         tosort = unsorted.pop()
+
+        # checking if the value coming out of the array is actually an int
+        try:
+            assert type(tosort) == int, "expected integer value and received non-integer value"
+        except AssertionError:
+            logging.warning("found non-integer value {} in array, skipping it".format(tosort))
+            continue
+
         i = 0
         logging.debug( "considering item {}".format(tosort) )
-        # print("is %d <= than " % tosort + str(new[i]))
+
         # loop through until finding an entry >= tosort
         if ( tosort >= new[len(new)-1] ):
             # it's the largest item, append
@@ -71,8 +85,8 @@ def createArray( size ):
 
 def main():
     size = 1000
-    #original = [ 4, 5, 4, 11, 98, 0, 2, 3, 7, 444]
-    original = createArray ( size )
+    original = [ 4, 5, 4, 11, 98, 0, 2, 3, 7, 'x', 444 ]
+    #original = createArray ( size )
     printArray( original )
     printArray( sortIntArray( original ) )
 
