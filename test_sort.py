@@ -2,7 +2,6 @@
 
 import unittest
 import sort
-import random
 
 class myModuleTest(unittest.TestCase):
 
