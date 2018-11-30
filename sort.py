@@ -12,8 +12,9 @@ import sys
 import random
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.ERROR)
+logging.basicConfig(stream=sys.stdout, level=logging.WARNING)
 
+# helper function only, should not really be included in this file.
 def printArray ( a ):   
     print( "list contains {} item(s)".format(len(a)) )
     for i in range(0, len(a)):
@@ -24,17 +25,21 @@ def sortIntArray( unsorted ):
     new = []
     i = 0
 
-    if (len(unsorted) <= 1):
+    if (len(unsorted) < 1):
         return unsorted
-
+    
     # looking for the first item to put into new[]
     while ((len(new) == 0) and len(unsorted) >= 1):
+        logging.debug( "still {} item(s) to sort".format(len(unsorted)) )
         tosort = unsorted.pop()
+        # print("considering item {}".format(tosort))
+
         # checking if the value coming out of the array is actually an int
         try:
             assert type(tosort) == int, "expected integer value and received non-integer value"
         except AssertionError:
             logging.warning("found non-integer value {} in array, skipping it".format(tosort))
+            continue
         else:
             logging.debug("inserting {} at position {}".format(tosort, str(i)))
             new.insert(i, tosort)
@@ -84,11 +89,14 @@ def createArray( size ):
     return a
 
 def main():
-    size = 1000
-    original = [ 4, 5, 4, 11, 98, 0, 2, 3, 7, 'x', 444 ]
+    # size = 1000
+    # original = [ 4, 5, 4, 11, 98, 0, 2, 3, 7, 'x', 444 ]
     #original = createArray ( size )
-    printArray( original )
-    printArray( sortIntArray( original ) )
+    # printArray( original )
+    # # printArray( sortIntArray( original ) )
+    # original = ['hello']
+    # printArray( original )
+    # printArray( sortIntArray( original ) ) 
 
     return 0
 
