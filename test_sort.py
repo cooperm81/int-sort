@@ -36,6 +36,20 @@ class myModuleTest(unittest.TestCase):
         a = sort.createArray(1000)
         #TODO: finish test case.
 
+    def test_sortIntArray_50(self):
+        '''testing arrays of zero length'''
+        myArray = []
+        assert sort.sortIntArray( myArray ) == [], "incorrectly handled zero length arrays"
+
+    def test_sortIntArray_60(self):
+        '''testing arrays with one item'''
+        myArray = [ 88 ]
+        assert sort.sortIntArray( myArray ) == [ 88 ], "incorrectly handled array with one item"
+
+    def test_sortIntArray_70(self):
+        '''testing arrays with one item which is non-integer'''
+        myArray = [ 'hello' ]
+        assert sort.sortIntArray( myArray ) == [], "incorrectly handled array with one item that is non-integer"
 
 if (__name__ == "__main__"):
     unittest.main() #run all test cases
